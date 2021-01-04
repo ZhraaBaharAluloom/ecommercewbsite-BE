@@ -8,4 +8,9 @@ Shop.hasMany(Pasta, { as: "pastas", foreignKey: "shopId", allowNull: false });
 // Each pasta belongs to one shop
 Pasta.belongsTo(Shop, { as: "shop" });
 
+// Each user can have one shop only
+User.hasOne(Shop);
+// A shop belongs to one user only
+Shop.belongsTo(User);
+
 module.exports = { Pasta, Shop, User };

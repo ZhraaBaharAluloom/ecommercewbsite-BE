@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require("passport");
 const router = express.Router();
 const {
   pastaList,
@@ -24,8 +25,17 @@ router.param("pastaId", async (req, res, next, pastaId) => {
 
 router.get("/", pastaList);
 
-router.delete("/:pastaId", deletePasta);
+router.delete(
+  "/:pastaId",
+  passport.authenticate("jwt", { session: false }),
+  deletePasta
+);
 
-router.put("/:pastaId", upload.single("image"), updatePasta);
+router.put(
+  "/:pastaId",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  updatePasta
+);
 
 module.exports = router;

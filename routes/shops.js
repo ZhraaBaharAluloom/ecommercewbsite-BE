@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require("passport");
 const router = express.Router();
 const {
   shopList,
@@ -26,12 +27,26 @@ router.param("shopId", async (req, res, next, shopId) => {
 
 router.get("/", shopList);
 
-router.delete("/:shopId", deleteShop);
+router.delete(
+  "/:shopId",
+  passport.authenticate("jwt", { session: false }),
+  deleteShop
+);
 
-router.post("/", upload.single("image"), createShop);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  createShop
+);
 
 router.post("/:shopId/pastas", upload.single("image"), createPasta);
 
-router.put("/:shopId", upload.single("image"), updateShop);
+router.put(
+  "/:shopId",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  updateShop
+);
 
 module.exports = router;
