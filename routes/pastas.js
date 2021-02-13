@@ -1,4 +1,5 @@
 const express = require("express");
+const { Passport } = require("passport");
 const passport = require("passport");
 const router = express.Router();
 const {
@@ -6,6 +7,7 @@ const {
   updatePasta,
   deletePasta,
   fetchPasta,
+  createComment,
 } = require("../controllers/pastaController");
 
 // Middleware
@@ -29,6 +31,12 @@ router.delete(
   "/:pastaId",
   passport.authenticate("jwt", { session: false }),
   deletePasta
+);
+
+router.post(
+  "/:pastaId/comment",
+  passport.authenticate("jwt", { session: false }),
+  createComment
 );
 
 router.put(

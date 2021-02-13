@@ -1,4 +1,4 @@
-const { Pasta, Shop } = require("../db/models");
+const { Pasta, Shop, Comment, User } = require("../db/models");
 
 exports.fetchPasta = async (pastaId, next) => {
   try {
@@ -31,6 +31,18 @@ exports.pastaList = async (req, res, next) => {
       },
     });
     res.json(pastas);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createComment = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    req.body.username = user.username;
+    req.body.pastaId = req.pasta.id;
+    const newComment = await Comment.create(req.body);
+    res.status(201).json(newComment);
   } catch (error) {
     next(error);
   }

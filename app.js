@@ -15,6 +15,7 @@ const pastaRoutes = require("./routes/pastas");
 const shopRoutes = require("./routes/shops");
 const userRoutes = require("./routes/users");
 const contactRoutes = require("./routes/contacts");
+const commentRoutes = require("./routes/comments");
 
 // Middleware
 const app = express();
@@ -28,7 +29,8 @@ passport.use(jwtStrategy);
 app.use("/pastas", pastaRoutes);
 app.use("/shops", shopRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
-app.use("/", contactRoutes);
+app.use("/contacts", contactRoutes);
+app.use("/comments", commentRoutes);
 app.use(userRoutes);
 
 //Not Found Paths
